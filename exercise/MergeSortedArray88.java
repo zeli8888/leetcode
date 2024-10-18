@@ -12,16 +12,21 @@ import java.util.Stack;
 // 2,4,7,10
 public class MergeSortedArray88 {
     public static void main(String[] args) {
-        int[] nums1 = {1, 2, 3, 0, 0, 0};
-        int m = 3;
-        int[] nums2 = {2, 5, 6};
-        int n = 3;
+        int[] nums1 = {0};
+        int m = 0;
+        int[] nums2 = {1};
+        int n = 1;
         new MergeSortedArray88().merge(nums1, m, nums2, n);
         System.out.println(Arrays.toString(nums1));
 
     }
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        if (nums2.length != 0){
+        if (m == 0){
+            for(int i=0; i<n; i++){
+                nums1[i] = nums2[i];
+            }
+        }
+        else if (n != 0){
             int i = 0;
             int j = 0;
             Stack<Integer> stack = new Stack<>();
