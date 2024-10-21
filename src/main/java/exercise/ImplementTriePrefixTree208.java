@@ -13,25 +13,28 @@ public class ImplementTriePrefixTree208 {
     }
 
     public void insert(String word) {
-        ImplementTriePrefixTree208 cur = this;
-        for(char idx: word.toCharArray()) {
-            idx -= 'a';
-            if(cur.node[idx] == null)
-                cur.node[idx] = new ImplementTriePrefixTree208();
-            cur = cur.node[idx];
+        ImplementTriePrefixTree208 curr = this;
+        for (char c: word.toCharArray()){
+            int index = c - 'a';
+            if (curr.node[index] == null){
+                curr.node[index] = new ImplementTriePrefixTree208();
+            }
+            curr = curr.node[index];
         }
-        cur.isWord = true;
+        curr.isWord = true;
     }
 
     private boolean searchWordPrefix(String s, boolean isPrefix) {
-        ImplementTriePrefixTree208 cur = this;
-        for(char idx: s.toCharArray()) {
-            idx -= 'a';
-            if(cur.node[idx] == null)
+        ImplementTriePrefixTree208 curr = this;
+        for (char c : s.toCharArray()) {
+            int index = c - 'a';
+            if (curr.node[index] == null) {
                 return false;
-            cur = cur.node[idx];
+            } else {
+                curr = curr.node[index];
+            }
         }
-        return isPrefix || cur.isWord;
+        return isPrefix || curr.isWord;
     }
 
     public boolean search(String word) {
