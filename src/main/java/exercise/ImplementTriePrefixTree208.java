@@ -1,10 +1,5 @@
 package exercise;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @Author : Ze Li
  * @Date : 21/10/2024 13:26
@@ -12,11 +7,9 @@ import java.util.Set;
  * @Description :
  */
 public class ImplementTriePrefixTree208 {
-    int count;
     boolean isWord;
     ImplementTriePrefixTree208[] node = new ImplementTriePrefixTree208[26];
     public ImplementTriePrefixTree208() {
-        count = 0;
     }
 
     public void insert(String word) {
@@ -25,10 +18,8 @@ public class ImplementTriePrefixTree208 {
             idx -= 'a';
             if(cur.node[idx] == null)
                 cur.node[idx] = new ImplementTriePrefixTree208();
-            ++cur.count;
             cur = cur.node[idx];
         }
-        ++cur.count;
         cur.isWord = true;
     }
 
@@ -40,7 +31,7 @@ public class ImplementTriePrefixTree208 {
                 return false;
             cur = cur.node[idx];
         }
-        return isPrefix ? cur.count > 0 : cur.isWord;
+        return isPrefix || cur.isWord;
     }
 
     public boolean search(String word) {
