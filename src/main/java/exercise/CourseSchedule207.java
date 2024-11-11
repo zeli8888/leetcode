@@ -1,9 +1,6 @@
 package exercise;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Author : Ze Li
@@ -12,49 +9,54 @@ import java.util.Stack;
  * @Description :
  */
 public class CourseSchedule207 {
+    public static void main(String[] args) {
+        int numCourses = 5;
+        int[][] prerequisites = {{1, 4}, {2, 4}, {3, 1}, {3, 2}};
+        System.out.println(new CourseSchedule207().canFinish(numCourses, prerequisites));
+    }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        class TreeNode {
-            List<TreeNode> parent;
-            List<TreeNode> child;
-            public TreeNode() {}
+        int counter = 0;
+        if (numCourses <= 0) {
+            return true;
         }
-        TreeNode[] nodes = new TreeNode[numCourses];
+
+        // Initialize inDegree array and adjacency list
+        int[] inDegree = new int[numCourses];
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < numCourses; i++) {
-            nodes[i] = new TreeNode();
+            graph.add(new ArrayList<>());
         }
-        for (int[] prerequisite : prerequisites) {
-            nodes[prerequisite[0]].parent.add(nodes[prerequisite[1]]);
-            nodes[prerequisite[1]].child.add(nodes[prerequisite[0]]);
+
+        // Build the graph and update inDegree for each node
+        for (int[] edge : prerequisites) {
+            int parent = edge[1];
+            int child = edge[0];
+            graph.get(parent).add(child);
+            inDegree[child]++;
         }
-        Stack<TreeNode> rootNodes = null;
+
+        // Initialize the queue with courses having no prerequisites (inDegree = 0)
+        Queue<Integer> sources = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
-            rootNodes = new Stack<>();
-            if (nodes[i].parent == null) {
-                rootNodes.push(nodes[i]);
+            if (inDegree[i] == 0) {
+                sources.offer(i);
             }
         }
-        if (rootNodes == null) {
-            return false;
-        }
-        while (!rootNodes.isEmpty()) {
-            TreeNode node = rootNodes.pop();
-            Set<TreeNode> childNodes = new HashSet<>();
-            Stack<TreeNode> loopNodes = new Stack<TreeNode>();
-            loopNodes.push(node);
-            while (!loopNodes.isEmpty()) {
-                TreeNode loopNode = loopNodes.pop();
-                if (loopNode.child == null) {
-                    continue;
-                }
-                for (TreeNode childNode : loopNode.child) {
-                    if (childNodes.contains(childNode)){
-                        return false;
-                    }
-                    childNodes.add(childNode);
-                    loopNodes.push(childNode);
+
+        // Process nodes with no prerequisites
+        while (!sources.isEmpty()) {
+            int course = sources.poll(); // dequeue
+            counter++;
+
+            // Process all the children of the current course
+            for (int child : graph.get(course)) {
+                inDegree[child]--;
+                if (inDegree[child] == 0) {
+                    sources.offer(child); // enqueue child if inDegree becomes 0
                 }
             }
         }
-        return true;
+        // If we processed all courses, return true
+        return counter == numCourses;
     }
 }
