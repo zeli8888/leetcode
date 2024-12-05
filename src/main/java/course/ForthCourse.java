@@ -1,8 +1,10 @@
 package course;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import exercise.TreeNode;
 
 /**
  * @Author : Ze Li
@@ -10,24 +12,6 @@ import java.util.Stack;
  * @Version : V1.0
  * @Description :
  */
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {}
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
 
 public class ForthCourse {
     public static void main(String[] args) {
@@ -38,13 +22,16 @@ public class ForthCourse {
 //            / \ / \
 //           4  5 6  7
 //        """
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
-        root.right.left = new TreeNode(6);
-        root.right.right = new TreeNode(7);
+//        TreeNode root = new TreeNode(1);
+//        root.left = new TreeNode(2);
+//        root.right = new TreeNode(3);
+//        root.left.left = new TreeNode(4);
+//        root.left.right = new TreeNode(5);
+//        root.right.left = new TreeNode(6);
+//        root.right.right = new TreeNode(7);
+        TreeNode root = new TreeNode(new Object[] {1,2,3,4,5,6,7});
+
+        System.out.println(root);
 
         System.out.println("BFS:");
         BFS(root);
