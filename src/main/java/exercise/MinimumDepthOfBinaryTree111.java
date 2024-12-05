@@ -8,7 +8,7 @@ import course.ForthCourse;
  */
 public class MinimumDepthOfBinaryTree111 {
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(new Object[] {1,2});
+        TreeNode root = new TreeNode(new Object[] {1,2,3,4,5,6,7,null,1,null,null,null,2,2});
         System.out.println(root);
         System.out.println( new MinimumDepthOfBinaryTree111().minDepth(root));
     }
