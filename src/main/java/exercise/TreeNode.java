@@ -49,10 +49,23 @@ public class TreeNode {
          }
      }
 
+     @Override
+     public boolean equals(Object a){
+         if (a instanceof TreeNode){
+             return ((TreeNode) a).val == this.val;
+         }
+         return false;
+     }
+
     public String toString() {
         StringBuilder buffer = new StringBuilder(50);
         print(buffer, "", "");
         return buffer.toString();
+    }
+
+    @Override
+    public int hashCode(){
+         return Objects.hash(this.val);
     }
 
     private void print(StringBuilder buffer, String prefix, String childrenPrefix) {
