@@ -12,15 +12,11 @@ public class CoinChangeII518 {
         System.out.println(coinChangeII518.change(500, new int[]{1,2,5}));
     }
     public int change(int amount, int[] coins) {
-        if (amount == 0) return 1;
         int[] combinations = new int[amount + 1];
-        for (int i = 0; i <= amount; i++){
-            for (int coin : coins){
-                if (i < coin) continue;
-                if (i % coin == 0) {combinations[i]++;
-                }else if (combinations[i - coin] != 0) {
-                    combinations[i] = combinations[i - coin] + 1;
-                }
+        combinations[0] = 1;
+        for (int coin : coins){
+            for (int i = coin; i <= amount; i++){
+                combinations[i] += combinations[i - coin];
             }
         }
         return combinations[amount];
