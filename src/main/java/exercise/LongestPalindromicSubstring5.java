@@ -7,23 +7,29 @@ package exercise;
  * @Description :
  */
 public class LongestPalindromicSubstring5 {
+    public static void main(String[] args) {
+        LongestPalindromicSubstring5 longestPalindromicSubstring5 = new LongestPalindromicSubstring5();
+        System.out.println(longestPalindromicSubstring5.longestPalindrome("cbbd"));
+    }
     public String longestPalindrome(String s) {
         boolean[][] dp = new boolean[s.length()][s.length()];
-        for (int i = 0; i < s.length(); i++){
-            dp[i][i] = true;
-        }
+
         int[] ans = new int[2];
         int maxSubLen = 1;
-        for (int i = 0; i < s.length()-1; i++){
-            for (int j = i+1; j < s.length(); j++){
-                dp[i][j] = dp[i+1][j-1] && s.charAt(i) == s.charAt(j);
-                if (dp[i][j] && maxSubLen < j-i) {
+        for (int i = s.length()-1; i >= 0; i--){
+            for (int j = i; j < s.length(); j++){
+                if (j-1 > i+1){
+                    dp[i][j] = dp[i+1][j-1] && s.charAt(i) == s.charAt(j);
+                }else{
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
+                }
+                if (dp[i][j] && maxSubLen < j-i+1) {
                     maxSubLen = j-i+1;
                     ans[0] = i;
                     ans[1] = j;
                 }
             }
         }
-        return s.substring(ans[0], ans[1]);
+        return s.substring(ans[0], ans[1]+1);
     }
 }
