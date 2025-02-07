@@ -1,0 +1,61 @@
+package exercise;
+
+import java.util.Arrays;
+
+/**
+ * @Author : Ze Li
+ * @Date : 07/02/2025 10:14
+ * @Version : V1.0
+ * @Description :
+ */
+public class ThreeSumClosest {
+    public static void main(String[] args) {
+        ThreeSumClosest threeSumClosest = new ThreeSumClosest();
+        System.out.println(threeSumClosest.threeSumClosest(new int[]{2, 3, 8, 9, 10}, 16));
+    }
+
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        int minDiff=Integer.MAX_VALUE;
+        int ans=0;
+        for(int i=0;i<n-2;i++){
+            int low=i+1,high=n-1;
+            while(low<high){
+                int temp=nums[i]+nums[low]+nums[high];
+                if(Math.abs(target-temp)<minDiff){
+                    ans=temp;
+                    minDiff=Math.abs(target-temp);
+                }
+                if(temp==target){
+                    return target;
+                }
+                else if(temp>target){
+                    high--;
+                }
+                else{
+                    low++;
+                }
+            }
+        }
+        return ans;
+
+    }
+
+//    public int threeSumClosest(int[] nums, int target) {
+//        // Arrays.sort(nums);
+//        int ans = nums[0]+nums[1]+nums[2];
+//        int minDis = Math.abs(ans-target);
+//        for (int i = 0; i < nums.length-2; i++){
+//            for (int j = i+1; j < nums.length-1; j++){
+//                for (int k = j+1; k < nums.length; k++){
+//                    int curSum = nums[i] + nums[j] + nums[k];
+//                    int curDis = Math.abs(curSum-target);
+//                    if (curDis < minDis){minDis = curDis;ans=curSum;}
+//                }
+//            }
+//        }
+//        return ans;
+//
+//    }
+}
