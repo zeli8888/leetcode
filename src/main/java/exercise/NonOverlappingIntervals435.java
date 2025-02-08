@@ -1,0 +1,28 @@
+package exercise;
+
+import java.util.Arrays;
+
+/**
+ * @Author : Ze Li
+ * @Date : 08/02/2025 13:00
+ * @Version : V1.0
+ * @Description :
+ */
+public class NonOverlappingIntervals435 {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        int res = 0;
+
+        Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
+        int prev_end = intervals[0][1];
+
+        for (int i = 1; i < intervals.length; i++) {
+            if (prev_end > intervals[i][0]) {
+                res++;
+            } else {
+                prev_end = intervals[i][1];
+            }
+        }
+
+        return res;
+    }
+}

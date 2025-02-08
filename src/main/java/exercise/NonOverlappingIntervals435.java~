@@ -1,0 +1,16 @@
+package exercise;
+
+import java.util.Arrays;
+
+/**
+ * @Author : Ze Li
+ * @Date : 08/02/2025 13:00
+ * @Version : V1.0
+ * @Description :
+ */
+public class NonOverlappingIntervals435 {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals, (a,b)->a[0]==b[0]?a[1]-b[1]:a[0]-b[0]);
+
+    }
+}
