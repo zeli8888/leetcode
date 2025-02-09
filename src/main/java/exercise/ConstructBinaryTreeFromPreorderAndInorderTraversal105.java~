@@ -1,7 +1,5 @@
 package exercise;
 
-import course.TreeNode;
-
 import java.util.HashMap;
 
 /**

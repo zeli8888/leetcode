@@ -1,6 +1,7 @@
 package exercise;
 
-import course.TreeNode;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  @Author : Ze Li
