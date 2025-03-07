@@ -1,0 +1,80 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 07/03/2025 16:26
+ * @Version : V1.0
+ * @Description :
+ */
+public class SearchInRotatedSortedArray33 {
+    public static void main(String[] args) {
+        SearchInRotatedSortedArray33 searchInRotatedSortedArray33 = new SearchInRotatedSortedArray33();
+        System.out.println(searchInRotatedSortedArray33.search(new int[]{2,3,4,5,1}, 1));
+    }
+
+    public int search(int[] nums, int target) {
+        int pivot = findPivot(nums);
+
+        int left = 0;
+        int right = pivot;
+        while (left <= right){
+            int mid = left + (right-left)/2;
+            if (nums[mid] == target){
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        left = pivot+1;
+        right = nums.length-1;
+        while (left <= right){
+            int mid = left + (right-left)/2;
+            if (nums[mid] == target){
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    private int findPivot(int[] nums){
+        if (nums.length <= 2){return 0;}
+        if (nums[(nums.length-1)/2] > nums[(nums.length-1)/2+1]){return (nums.length-1)/2;}
+
+        int left = 0;
+        int right = (nums.length-1)/2 - 1;
+        int pivot = 0;
+        int lastNum = nums[right];
+        if (nums[right] > nums[right+1]){return right;}
+
+        while (left <= right){
+            int mid = left + (right-left)/2;
+            if (nums[mid] < lastNum){
+                right = mid-1;
+            }else{
+                left = mid+1;
+                pivot = mid;
+            }
+        }
+        if(pivot != 0){return pivot;}
+
+        left = (nums.length-1)/2 +1;
+        right = (nums.length-1);
+        lastNum = nums[left];
+        while (left < right){
+            int mid = left + (right-left)/2;
+            if (nums[mid] > lastNum){
+                left = mid+1;
+            }else{
+                right = mid-1;
+                pivot = right;
+            }
+        }
+        return pivot;
+    }
+}
