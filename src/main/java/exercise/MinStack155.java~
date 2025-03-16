@@ -9,7 +9,7 @@ package exercise;
 public class MinStack155 {
     private class Node{
         private int val;
-        private Node lastNode;
+        private exercise.Node lastNode;
         private int minVal;
 
         public int getMinVal() {
@@ -33,11 +33,11 @@ public class MinStack155 {
             this.val = val;
         }
 
-        public Node getLastNode() {
+        public exercise.Node getLastNode() {
             return lastNode;
         }
 
-        public void setLastNode(Node lastNode) {
+        public void setLastNode(exercise.Node lastNode) {
             this.lastNode = lastNode;
             if (lastNode.getMinVal() < this.minVal){
                 this.minVal = lastNode.getMinVal();
