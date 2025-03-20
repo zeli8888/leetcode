@@ -1,0 +1,53 @@
+package exercise;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * @Author : Ze Li
+ * @Date : 20/03/2025 20:55
+ * @Version : V1.0
+ * @Description :
+ */
+public class RottingOranges994 {
+    public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] rottenMinutes = new int[m][n];
+        Queue<int[]> rottenOranges = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    rottenOranges.offer(new int[]{i,j});
+                }
+            }
+        }
+
+        int minMinutes = 0;
+        int[][] directions = new int[][] {{1,0},{-1,0},{0,1},{0,-1}};
+        while (!rottenOranges.isEmpty()) {
+            int[] rottenOrangeIndex = rottenOranges.poll();
+            int i = rottenOrangeIndex[0];
+            int j = rottenOrangeIndex[1];
+            for (int[] direction : directions) {
+                int r = i + direction[0];
+                int c = j + direction[1];
+                if (r >= 0 && r <= m-1 && c >= 0 && c <= n-1 && grid[r][c] == 1) {
+                    rottenOranges.offer(new int[]{r,c});
+                    grid[r][c] = 2;
+                    rottenMinutes[r][c] = rottenMinutes[i][j]+1;
+                    minMinutes = Math.max(minMinutes, rottenMinutes[r][c]);
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return -1;
+                }
+            }
+        }
+        return minMinutes;
+    }
+}
