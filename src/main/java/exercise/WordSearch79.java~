@@ -1,0 +1,56 @@
+package exercise;
+
+import java.util.Stack;
+
+/**
+ * @Author : Ze Li
+ * @Date : 31/03/2025 10:05
+ * @Version : V1.0
+ * @Description :
+ */
+public class WordSearch79 {
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
+        int[][] direct = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+        if (word.length() == 1 && board[0][0] == word.charAt(0)) {return true;}
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                char w = board[i][j];
+                if (w == word.charAt(0) && helper(board, word, new int[] { 0, i, j }, direct, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean helper(char[][] board, String word, int[] curIndex, int[][] direct, boolean [][] visited) {
+        int pos = curIndex[0];
+        int x = curIndex[1];
+        int y = curIndex[2];
+        int m = board.length;
+        int n = board[0].length;
+        int l = word.length();
+
+        visited[x][y] = true;
+        boolean result = false;
+        for (int[] direction : direct) {
+            int i = x + direction[0];
+            int j = y + direction[1];
+            if (i >= 0 && i < m && j >= 0 && j < n && pos+1 < l && !visited[i][j]) {
+                char newLetter = word.charAt(pos + 1);
+                if (newLetter == board[i][j]) {
+                    if (l-1 == pos + 1) {
+                        return true;
+                    } else {
+                        result = result || helper(board, word, new int[] { pos + 1, i, j }, direct, visited);
+                    }
+                }
+            }
+        }
+        visited[x][y] = false;
+        return result;
+    }
+}
