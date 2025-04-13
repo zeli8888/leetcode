@@ -1,0 +1,47 @@
+package exercise;
+
+import java.util.*;
+
+/**
+ * @Author : Ze Li
+ * @Date : 13/04/2025 14:12
+ * @Version : V1.0
+ * @Description :
+ */
+public class MinimumHeightTrees310 {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        if (n==1) return Collections.singletonList(0);
+        int[] degree = new int[n];
+        List<Integer>[] neighbours = new List[n];
+        for (int i = 0; i < n; i++) {
+            neighbours[i] = new LinkedList<>();
+        }
+        for (int[] edge : edges) {
+            degree[edge[0]]++;
+            degree[edge[1]]++;
+            neighbours[edge[0]].add(edge[1]);
+            neighbours[edge[1]].add(edge[0]);
+        }
+        Queue<Integer> oneEdgeNodes = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (degree[i] == 1) {
+                oneEdgeNodes.add(i);
+            }
+        }
+
+        int remaining = n;
+        while (remaining > 2) {
+            int numNodesToRemove = oneEdgeNodes.size();
+            for (int i = 0; i < numNodesToRemove; i++) {
+                int nodeToRemove = oneEdgeNodes.poll();
+                for (int negihour:neighbours[nodeToRemove]) {
+                    if(--degree[negihour] == 1) {
+                        oneEdgeNodes.add(negihour);
+                    }
+                }
+            }
+            remaining -= numNodesToRemove;
+        }
+        return oneEdgeNodes.stream().toList();
+    }
+}
