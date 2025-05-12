@@ -1,0 +1,71 @@
+package exercise;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
+/**
+ * @Author : Ze Li
+ * @Date : 03/05/2025 15:44
+ * @Version : V1.0
+ * @Description :
+ */
+public class CheapestFlightsWithinKStops787 {
+
+//    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+//        int[] dp = new int[n];
+//        Arrays.fill(dp, Integer.MAX_VALUE);
+//        dp[src] = 0;
+//
+//        for (int i = 0; i <= k; i++) {
+//            int[] temp = Arrays.copyOf(dp, n);
+//            for (int[] flight : flights) {
+//                if (dp[flight[0]] != Integer.MAX_VALUE) {
+//                    temp[flight[1]] = Math.min(temp[flight[1]], dp[flight[0]] + flight[2]);
+//                }
+//            }
+//            dp = temp;
+//        }
+//
+//        return dp[dst] == Integer.MAX_VALUE ? -1 : dp[dst];
+//    }
+    public static void main(String[] args) {
+        int[][] array = {
+                {0, 1, 1},
+                {0, 2, 5},
+                {1, 2, 1},
+                {2, 3, 1}
+        };
+        CheapestFlightsWithinKStops787 cheapestFlightsWithinKStops787 = new CheapestFlightsWithinKStops787();
+        System.out.println(cheapestFlightsWithinKStops787.findCheapestPrice(4, array, 0, 3, 1));
+    }
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        int[][] price = new int[n][n];
+        HashMap<Integer, HashSet<Integer>> flightMap = new HashMap<>();
+        for (int[] flight : flights) {
+            price[flight[0]][flight[1]] = flight[2];
+            if (!flightMap.containsKey(flight[0])) {
+                flightMap.put(flight[0], new HashSet<>());
+            }
+            flightMap.get(flight[0]).add(flight[1]);
+        }
+        if (!flightMap.containsKey(src)) {return -1;}
+        int[] minCost = new int[n];
+        Arrays.fill(minCost, Integer.MAX_VALUE);
+        int ans = DFS(price, flightMap, src, dst, k, 0, 0, minCost);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+
+    public int DFS(int[][] price, HashMap<Integer, HashSet<Integer>> flightMap, int src, int dst, int k, int curStop, int curPrice, int[] minCost) {
+        if (curPrice >= minCost[src]) return minCost[dst];
+        minCost[src] = curPrice;
+        if (curStop == k+1 && src != dst) {return minCost[dst];}
+        if (src == dst) {return curPrice;}
+        HashSet<Integer> stops = flightMap.get(src);
+        if (stops == null) {return minCost[dst];}
+        for (int stop : stops) {
+            minCost[dst] = DFS(price, flightMap, stop, dst, k, curStop+1, curPrice+price[src][stop], minCost);
+        }
+        return minCost[dst];
+    }
+}

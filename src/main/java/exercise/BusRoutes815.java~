@@ -1,0 +1,59 @@
+package exercise;
+
+import java.util.*;
+
+/**
+ * @Author : Ze Li
+ * @Date : 02/05/2025 18:59
+ * @Version : V1.0
+ * @Description :
+ */
+public class BusRoutes815 {
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+        if (source == target) return 0;
+        HashMap<Integer, List<Integer>> stationBusMap = new HashMap<>();
+        for (int i = 0; i < routes.length; i++) {
+            for (int station : routes[i]) {
+                if (!stationBusMap.containsKey(station)) stationBusMap.put(station, new LinkedList<Integer>());
+                stationBusMap.get(station).add(i);
+            }
+        }
+        Queue<Integer> stationQueue = new LinkedList<>();
+        HashSet<Integer> visitedStation = new HashSet<>();
+        visitedStation.add(source);
+        int answer = 0;
+        stationQueue.add(source);
+        while (!stationQueue.isEmpty()) {
+            answer++;
+            int curStationQueueSize = stationQueue.size();
+            for (int i = 0; i < curStationQueueSize; i++) {
+                Integer station = stationQueue.poll();
+                List<Integer> busList = stationBusMap.get(station);
+                for (Integer bus : busList) {
+                    for (int newStation : routes[bus]) {
+                        if (newStation == target) return answer;
+                        if (!visitedStation.contains(newStation)) {
+                            stationQueue.add(newStation);
+                            visitedStation.add(newStation);
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        BusRoutes815 busRoutes815 = new BusRoutes815();
+        int[][] array = {
+                {0, 1, 6, 16, 22, 23},
+                {14, 15, 24, 32},
+                {4, 10, 12, 20, 24, 28, 33},
+                {1, 10, 11, 19, 27, 33},
+                {11, 23, 25, 28},
+                {15, 20, 21, 23, 29},
+                {29}
+        };
+        System.out.println(busRoutes815.numBusesToDestination(array, 4, 21));
+    }
+}
