@@ -9,7 +9,18 @@ import course.TreeNode;
  * @Description :
  */
 public class DiameterOfBinaryTree543 {
+    int maxDiameter;
     public int diameterOfBinaryTree(TreeNode root) {
-        
+        helper(root);
+        return maxDiameter;
+    }
+
+    public int helper(TreeNode root) {
+        if (root == null) return 0;
+        int l = diameterOfBinaryTree(root.left);
+        int r = diameterOfBinaryTree(root.right);
+        int curDiameter = l+r;
+        maxDiameter = Math.max(curDiameter, maxDiameter);
+        return Math.max(l,r)+1;
     }
 }
