@@ -17,8 +17,8 @@ public class MaximumWidthOfBinaryTree662 {
         int index;
 
         public Node(TreeNode node, int index){
-            this.node = node;
-            this.index = index;
+            node = node;
+            index = index;
         }
     }
 
@@ -39,6 +39,7 @@ public class MaximumWidthOfBinaryTree662 {
                 if (i == size-1) {
                     r = node.index;
                 }
+                ans = Math.max(r-l+1, ans);
                 if (treeNode.left != null) {
                     queue.add(new Node(treeNode.left, 2*node.index));
                 }
@@ -46,7 +47,6 @@ public class MaximumWidthOfBinaryTree662 {
                     queue.add(new Node(treeNode.right, 2*node.index+1));
                 }
             }
-            ans = Math.max(r-l+1, ans);
         }
         return ans;
     }
