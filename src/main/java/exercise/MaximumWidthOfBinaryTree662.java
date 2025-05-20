@@ -1,0 +1,53 @@
+package exercise;
+
+import course.TreeNode;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * @Author : Ze Li
+ * @Date : 20/05/2025 13:57
+ * @Version : V1.0
+ * @Description :
+ */
+public class MaximumWidthOfBinaryTree662 {
+    class Node {
+        TreeNode node;
+        int index;
+
+        public Node(TreeNode node, int index){
+            node = node;
+            index = index;
+        }
+    }
+
+    public int widthOfBinaryTree(TreeNode root) {
+        int ans = 0;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(root, 1));
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                int l = 0;
+                int r = 0;
+                Node node = queue.poll();
+                TreeNode treeNode = node.node;
+                if (i == 0) {
+                    l = node.index;
+                }
+                if (i == size-1) {
+                    r = node.index;
+                }
+                ans = Math.max(r-l+1, ans);
+                if (treeNode.left != null) {
+                    queue.add(new Node(treeNode.left, 2*node.index));
+                }
+                if (treeNode.right != null) {
+                    queue.add(new Node(treeNode.right, 2*node.index+1));
+                }
+            }
+        }
+        return ans;
+    }
+}
