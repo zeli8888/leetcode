@@ -1,0 +1,48 @@
+package exercise;
+
+import course.TreeNode;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * @Author : Ze Li
+ * @Date : 21/05/2025 11:59
+ * @Version : V1.0
+ * @Description :
+ */
+public class AllNodesDistanceKInBinaryTree863 {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        HashMap<TreeNode, TreeNode> parentMap = new HashMap<>();
+        DFS(root.left, root, parentMap);
+        DFS(root.right, root, parentMap);
+        int[] visited = new int[501];
+        List<Integer> ans = new LinkedList<>();
+        DFS(target, visited, ans, k);
+        for (int i = 1; i <= k; i++) {
+            target = parentMap.getOrDefault(target, null);
+            if (target == null) break;
+            DFS(target, visited, ans, k-i);
+        }
+        return ans;
+    }
+    
+    public void DFS(TreeNode root, int[] visited, List<Integer> ans, int k) {
+        if (root == null || visited[root.val] != 0) return;
+        visited[root.val] = 1;
+        if (k == 0) {
+            ans.add(root.val);
+        }
+        DFS(root.left, visited, ans, k-1);
+        DFS(root.right, visited, ans, k-1);
+
+    }
+
+    public void DFS(TreeNode root, TreeNode parent, HashMap<TreeNode, TreeNode> parentMap) {
+        if (root == null) return;
+        parentMap.put(root, parent);
+        DFS(root.left, root, parentMap);
+        DFS(root.right, root, parentMap);
+    }
+}
