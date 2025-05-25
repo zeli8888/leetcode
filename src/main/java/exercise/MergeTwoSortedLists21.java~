@@ -1,0 +1,22 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 25/05/2025 17:13
+ * @Version : V1.0
+ * @Description :
+ */
+public class MergeTwoSortedLists21 {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode ans = new ListNode();
+        mergeTwoLists(list1, list2, ans);
+        return ans.next;
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2, ListNode ans) {
+        while (list1 != null && list2 != null) {
+            if (list1.val )
+        }
+    }
+
+}

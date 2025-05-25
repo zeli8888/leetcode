@@ -1,0 +1,45 @@
+package exercise;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+/**
+ * @Author : Ze Li
+ * @Date : 23/05/2025 14:16
+ * @Version : V1.0
+ * @Description :
+ */
+public class LetterCombinationsOfAPhoneNumber17 {
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()) return new ArrayList<>();
+        HashMap<Integer, char[]> keyBoard = new HashMap<>();
+        for (int i = 2; i <= 6; i++) {
+            char[] letters = new char[3];
+            for (int j = 0; j <= 2; j++) {
+                letters[j] = (char) ('a' + j + (i-2)*3);
+            }
+            keyBoard.put(i, letters);
+        }
+        keyBoard.put(7, new char[]{'p', 'q', 'r', 's'});
+        keyBoard.put(8, new char[]{'t', 'u', 'v'});
+        keyBoard.put(9, new char[]{'w', 'x', 'y', 'z'});
+
+        HashSet<String> ans = new HashSet<>();
+        helper(digits, 0, ans, "", keyBoard);
+        return new ArrayList<>(ans);
+    }
+
+    public void helper(String digits, int curIndex, HashSet<String> ans, String curString, HashMap<Integer, char[]> keyBoard) {
+        if (curIndex >= digits.length()) {
+            ans.add(curString);
+            return;
+        }
+        char[] letters = keyBoard.get(digits.charAt(curIndex) - '0');
+        for (char l : letters) {
+            helper(digits, curIndex+1, ans, curString+l, keyBoard);
+        }
+
+    }
+}
