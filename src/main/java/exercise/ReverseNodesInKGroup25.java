@@ -1,0 +1,36 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 28/05/2025 17:37
+ * @Version : V1.0
+ * @Description :
+ */
+public class ReverseNodesInKGroup25 {
+    public static void main(String[] args) {
+        ReverseNodesInKGroup25 reverseNodesInKGroup25 = new ReverseNodesInKGroup25();
+        ListNode listNode = new ListNode(1);
+        listNode.next = new ListNode(2);
+        listNode.next.next = new ListNode(3);
+        listNode.next.next.next = new ListNode(4);
+        listNode.next.next.next.next = new ListNode(5);
+        reverseNodesInKGroup25.reverseKGroup(listNode,2);
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) return null;
+        ListNode pre = null;
+        ListNode end = head;
+        int i;
+        for (i = 0; i < k && head != null; i++) {
+            ListNode temp = head.next;
+            head.next = pre;
+            pre = head;
+            head = temp;
+        }
+        if (i != k) {
+            return reverseKGroup(pre, i);
+        }
+        end.next = reverseKGroup(head, k);
+        return pre;
+    }
+}
