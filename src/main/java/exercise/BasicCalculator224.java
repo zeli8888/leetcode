@@ -1,0 +1,13 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 30/05/2025 21:08
+ * @Version : V1.0
+ * @Description :
+ */
+public class BasicCalculator224 {
+    public int calculate(String s) {
+
+    }
+}
