@@ -1,0 +1,29 @@
+package exercise;
+
+import java.util.Stack;
+
+/**
+ * @Author : Ze Li
+ * @Date : 04/06/2025 14:12
+ * @Version : V1.0
+ * @Description :
+ */
+public class AsteroidCollision735 {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> asteroidStack = new Stack<>();
+        for (int asteroid : asteroids) {
+            while (!asteroidStack.isEmpty() && asteroid < 0 && asteroidStack.peek() > 0) {
+                int nearAsteroid = asteroidStack.pop();
+                if (asteroid + nearAsteroid > 0) {
+                    asteroid = nearAsteroid;
+                    break;
+                } else if (nearAsteroid == -asteroid) {
+                    asteroid = 0;
+                    break;
+                }
+            }
+            if (asteroid != 0) asteroidStack.push(asteroid);
+        }
+        return asteroidStack.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
