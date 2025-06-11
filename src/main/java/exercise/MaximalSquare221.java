@@ -7,11 +7,15 @@ package exercise;
  * @Description :
  */
 public class MaximalSquare221 {
+    public static void main(String[] args) {
+        MaximalSquare221 maximalSquare221 = new MaximalSquare221();
+        System.out.println(maximalSquare221.maximalSquare(new char[][]{{'1', '0', '1', '0', '0'}, {'1', '0', '1', '1', '1'}, {'1', '1', '1', '1', '1'}, {'1', '0', '0', '1', '0'}}));
+    }
     public int maximalSquare(char[][] matrix) {
         int ans = 0;
         int m = matrix.length;
         int n = matrix[0].length;
-        int[][] directions = new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        int[][] directions = new int[][]{{0, -1}, {-1, 0}, {-1, -1}};
         int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -20,10 +24,13 @@ public class MaximalSquare221 {
                 for (int[] direction : directions) {
                     int k = i + direction[0];
                     int l = j + direction[1];
-                    if (k < 0 || k >= m || l < 0 || l >= n) continue;
+                    if (k < 0 || k >= m || l < 0 || l >= n) {
+                        curMin = Integer.MAX_VALUE;
+                        break;
+                    }
                     curMin = Math.min(dp[k][l], curMin);
                 }
-                dp[i][j] = curMin+1;
+                dp[i][j] = curMin != Integer.MAX_VALUE ? curMin+1 : 1;
                 ans = Math.max(ans, dp[i][j]);
             }
         }
