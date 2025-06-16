@@ -1,0 +1,14 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 16/06/2025 17:38
+ * @Version : V1.0
+ * @Description :
+ */
+public class PalindromeNumber9 {
+    public boolean isPalindrome(int x) {
+        if (x < 0) return false;
+        
+    }
+}
