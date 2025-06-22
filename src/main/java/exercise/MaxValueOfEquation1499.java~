@@ -1,0 +1,37 @@
+package exercise;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+/**
+ * @Author : Ze Li
+ * @Date : 22/06/2025 16:43
+ * @Version : V1.0
+ * @Description :
+ */
+public class MaxValueOfEquation1499 {
+    public static void main(String[] args) {
+        MaxValueOfEquation1499 maxValueOfEquation1499 = new MaxValueOfEquation1499();
+        System.out.println(maxValueOfEquation1499.findMaxValueOfEquation(new int[][]{
+                {-16, 15}, {-7, -18}, {-4, 2}, {1, 0}, {7, 10}, {9, -6}, {14, 5}, {15, 13}, {16, -12}, {20, 20}
+        }, 8));
+    }
+    public int findMaxValueOfEquation(int[][] points, int k) {
+        Deque<Pair<Integer, Integer>> ms = new ArrayDeque<>();
+        int res = Integer.MIN_VALUE;
+
+        for (int[] point : points) {
+            while (!ms.isEmpty() && point[0] - ms.peekFirst().getValue() > k) {
+                ms.pollFirst();
+            }
+            if (!ms.isEmpty()) {
+                res = Math.max(res, ms.peekFirst().getKey() + point[0] + point[1]);
+            }
+            while (!ms.isEmpty() && point[1] - point[0] > ms.peekLast().getKey()) {
+                ms.pollLast();
+            }
+            ms.offerLast(new Pair<>(point[1] - point[0], point[0]));
+        }
+        return res;
+    }
+}
