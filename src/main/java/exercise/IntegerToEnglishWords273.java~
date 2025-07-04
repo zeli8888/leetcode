@@ -1,0 +1,98 @@
+package exercise;
+
+import java.util.HashMap;
+import java.util.Stack;
+
+/**
+ * @Author : Ze Li
+ * @Date : 02/07/2025 12:03
+ * @Version : V1.0
+ * @Description :
+ */
+public class IntegerToEnglishWords273 {
+    class Solution {
+
+        // 0 se 19 tak ke numbers ke words
+        String[] below_20 = {
+                "", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+                "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen",
+                "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+        };
+
+        // 20, 30, ..., 90 ke words
+        String[] tens = {
+                "", "", "Twenty", "Thirty", "Forty", "Fifty",
+                "Sixty", "Seventy", "Eighty", "Ninety"
+        };
+
+        // Har 3-digit group ke liye scale (Thousand, Million, Billion)
+        String[] thousands = {
+                "", "Thousand", "Million", "Billion"
+        };
+
+        public String numberToWords(int num) {
+            // Special case: agar number 0 hai
+            if (num == 0) return "Zero";
+
+            String result = ""; // final result string
+            int i = 0; // thousands[] ka index
+
+            // Jab tak num khatam nahi ho jata
+            while (num > 0) {
+                int chunk = num % 1000; // last 3 digits ka group nikaalna
+
+                if (chunk != 0) {
+                    // current 3-digit group ko English mein convert karo
+                    String chunkWords = helper(chunk);
+
+                    String part = chunkWords;
+
+                    // Agar thousands[i] (jaise "Thousand", "Million") empty nahi hai toh jodo
+                    if (!thousands[i].isEmpty()) {
+                        part += " " + thousands[i];
+                    }
+
+                    // Agar pehle se result mein kuch hai toh usko bhi jodo
+                    if (!result.isEmpty()) {
+                        part += " " + result;
+                    }
+
+                    // Update result with current part
+                    result = part;
+                }
+
+                // Next 3 digits ke liye prepare karo
+                num /= 1000;
+                i++;
+            }
+
+            return result.trim(); // last space hata do
+        }
+
+        // Helper function: har 3-digit number ko English mein convert karta hai
+        private String helper(int num) {
+            if (num == 0) return "";
+
+                // 0–19 directly below_20[] se nikaal lo
+            else if (num < 20) return below_20[num];
+
+                // 20–99 ke liye tens[] se pehla part + recursively remainder
+            else if (num < 100) {
+                String result = tens[num / 10];
+                if (num % 10 != 0) {
+                    result += " " + helper(num % 10); // last digit ka bhi word jodo
+                }
+                return result;
+            }
+
+            // 100–999 ke liye: hundreds + recursive remainder
+            else {
+                String result = below_20[num / 100] + " Hundred";
+                if (num % 100 != 0) {
+                    result += " " + helper(num % 100); // last 2 digits ke words
+                }
+                return result;
+            }
+        }
+    }
+}
