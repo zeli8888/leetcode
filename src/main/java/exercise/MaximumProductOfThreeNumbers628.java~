@@ -1,0 +1,24 @@
+package exercise;
+
+import java.util.Arrays;
+
+/**
+ * @Author : Ze Li
+ * @Date : 09/07/2025 21:55
+ * @Version : V1.0
+ * @Description :
+ */
+public class MaximumProductOfThreeNumbers628 {
+    class Solution {
+        public int maximumProduct(int[] nums) {
+            Arrays.sort(nums);
+            int numLessThanZero = 0;
+            if (nums[0] < 0) {
+                for(int i = 1; i < nums.length; i++) {
+                    if (nums[i] )
+                }
+            }
+
+        }
+    }
+}
