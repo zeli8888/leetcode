@@ -1,0 +1,21 @@
+package exercise;
+
+/**
+ * @Author : Ze Li
+ * @Date : 11/07/2025 22:40
+ * @Version : V1.0
+ * @Description :
+ */
+public class HappyNumber202 {
+    class Solution {
+        public boolean isHappy(int n) {
+            int sum = 0;
+            while (n > 0) {
+                sum += (int) Math.pow(n%10,2);
+                n = n / 10;
+            }
+            if (sum == 1) return true;
+            else return isHappy(sum);
+        }
+    }
+}
