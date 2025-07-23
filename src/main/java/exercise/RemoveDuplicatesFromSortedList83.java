@@ -9,11 +9,19 @@ package exercise;
 public class RemoveDuplicatesFromSortedList83 {
     class Solution {
         public ListNode deleteDuplicates(ListNode head) {
-            int lastVal = head.val;
+            if (head == null) return null;
+            ListNode ans = head;
+            ListNode lastNode = head;
             head = head.next;
             while (head != null) {
-
+                if (lastNode.val == head.val) {
+                    lastNode.next = head.next;
+                }else {
+                    lastNode = head;
+                }
+                head = head.next;
             }
+            return ans;
         }
     }
 }
